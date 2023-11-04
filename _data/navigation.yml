@@ -7,7 +7,10 @@ main:
 #    url: /talks/    
 
 #  - title: "Teaching"
-#    url: /teaching/    
+#    url: /teaching/
+   
+  - title: "Resume"
+    url: /resume/ 
     
   - title: "Portfolio"
     url: /portfolio/
@@ -15,8 +18,7 @@ main:
   - title: "Blog Posts"
     url: /year-archive/
     
-  - title: "Resume"
-    url: /resume/
+
     
 #  - title: "Guide"
 #    url: /markdown/
