@@ -17,4 +17,14 @@ Timing side-channels require knowledge of the characteristics of your specific s
 # Observing GPU Activity
 With a baseline set we can now perform a timing side-channel on the shared last-level cache of our Intel SoC. The timing side channel works by purposefully filling up a cache set with data and allowing the target application to run, the cache set addresses are then accessed again. During the second access we time how long it takes to access the data. An access time longer than our ground truth means the data was expelled from the cache  and we conclude that the target application accessed that cache location. 
 
-Constructing the 
+## Constructing a Cache Set
+We construct our cache set using an algorithmic process that proceduraly fills more cache lines until we experience a cache miss. We can then take the number of cache addresses from this process and find which addresses belong to a set by accessing all but one of addresses found in the previous steps. We then observe the time it takes to access the first address. If a cache hit occurs we know the ommited address is part of our cache set.
+
+![image](/images/Projects/ms_thesis/set_0.png)
+
+## Perfoming the Side-Channel
+With a cache set constructed we can now target the gpu activity. We choose to run neural-network inference accelerated by the iGPU of our SoC. We use Intel's [OpenVINO](https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html "OpenVINO Overview") to deploy trained models on our system. A wrapper application launched the openVINO application and ran our side-channel on the CPU utilizing standard POSIX threads. The wrapper application was also ran with Intel [VTune](https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html "VTune Overview") profiler to confirm when gpu activity was occuring and which side-channel traces overlapped with the GPU execution time.
+
+![image](/images/Projects/ms_thesis/alexnet_1.png)
+
+# Future Work
